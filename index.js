@@ -2,6 +2,7 @@ const TelegramApi = require('node-telegram-bot-api');
 
 const { MENU, BACK } = require('./options');
 const { START_MASSAGE, INFO_MASSAGE,  ORDER_MASSAGE, MENU_MASSAGE, ERROR_MASSAGE} = require('./massage');
+const {getList} = require("./api");
 
 const TOKEN = '6893124057:AAHsPUv34IBx1N3rfXNq0lHtrUWATPiQzNA';
 
@@ -34,8 +35,17 @@ const start = async () => {
             await bot.sendMessage(chatId, INFO_MASSAGE);
             return bot.sendMessage(chatId, MENU_MASSAGE, BACK);
         } else if (data === '/products') {
-            await bot.sendMessage(chatId, 'Продукты');
-            return bot.sendMessage(chatId, MENU_MASSAGE, BACK);
+            const products = await getList();
+
+            if (products.length === 0) {
+                await bot.sendMessage(chatId, `Товары закончились, но не расстраивайтесь! Скоро будет новая поставка 😅`);
+            } else {
+                for (let product of products) {
+                    await bot.sendMessage(chatId, `${product.id}. ${product.name}`);
+                }
+            }
+
+            return await bot.sendMessage(chatId, MENU_MASSAGE, BACK);
         } else if (data === '/order') {
             await bot.sendMessage(chatId,  ORDER_MASSAGE);
             return bot.sendMessage(chatId, MENU_MASSAGE, BACK);
