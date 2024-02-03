@@ -4,7 +4,7 @@ const { MENU, BACK } = require('./options');
 const { START_MASSAGE, INFO_MASSAGE,  ORDER_MASSAGE, MENU_MASSAGE, ERROR_MASSAGE} = require('./massage');
 const {getList} = require("./api");
 
-const TOKEN = '6893124057:AAHsPUv34IBx1N3rfXNq0lHtrUWATPiQzNA';
+const TOKEN = '6893124057:AAHDpBpiVfxkV7d7D6qlM1WvMjHNoY6Aqps';
 
 const bot = new TelegramApi(TOKEN, { polling: true });
 
